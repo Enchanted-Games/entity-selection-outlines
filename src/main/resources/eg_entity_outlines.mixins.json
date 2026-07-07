@@ -1,13 +1,14 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "games.enchanted.eg_entity_outlines.common.mixin",
-  "compatibilityLevel": "JAVA_${java_ver}",
-  "mixins": [
-  ],
-  "client": [
-  ],
-  "injectors": {
-    "defaultRequire": 1
+    "required": true,
+    "minVersion": "0.8",
+    "package": "games.enchanted.eg_entity_outlines.common.mixin",
+    "compatibilityLevel": "JAVA_${java_ver}",
+    "mixins": [
+    ],
+    "client": [
+        "LevelExtractorMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
   }
 }
