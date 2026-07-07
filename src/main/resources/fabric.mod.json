@@ -17,9 +17,6 @@
   "entrypoints": {
     "main": [
       "${group}.${id}.fabric.FabricEntry"
-    ],
-    "modmenu": [
-      "${group}.${id}.fabric.ModMenuIntegration"
     ]
   },
   ${accesswidener_field}

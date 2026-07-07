@@ -17,11 +17,6 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 public class NeoForgeEntry {
     public NeoForgeEntry() {
         ModEntry.init();
-
-        ModLoadingContext.get().registerExtensionPoint(
-            IConfigScreenFactory.class, () -> (client, parent) ->
-                new ConfirmScreen(b -> Minecraft.getInstance().setScreen(parent), Component.literal(ModConstants.MOD_NAME + " Config Placeholder"), Component.empty())
-        );
     }
 }
 *///?}
