@@ -40,7 +40,9 @@ dependencies {
 
     // Mod Menu
     if (hasProperty("deps.modmenu")) {
-        api("com.terraformersmc:modmenu:${sc.properties.get<String>("deps.modmenu")}")
+        api("com.terraformersmc:modmenu:${sc.properties.get<String>("deps.modmenu")}") {
+            exclude("net.fabricmc.fabric-api")
+        }
     } else {
         compileOnly("com.terraformersmc:modmenu:18.0.0-alpha.8")
     }

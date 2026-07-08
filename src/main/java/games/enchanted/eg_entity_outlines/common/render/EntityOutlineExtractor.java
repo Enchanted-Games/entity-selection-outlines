@@ -1,7 +1,6 @@
 package games.enchanted.eg_entity_outlines.common.render;
 
 import games.enchanted.eg_entity_outlines.common.config.ConfigOptions;
-import games.enchanted.eg_entity_outlines.common.config.ConfigScreen;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
@@ -34,7 +33,7 @@ public class EntityOutlineExtractor {
         } else if(entity instanceof EndCrystal && ConfigOptions.OUTLINE_END_CRYSTALS.getValue()) {
             return true;
         }
-        
+
         return ConfigOptions.OUTLINE_EVERYTHING.getValue();
     }
 

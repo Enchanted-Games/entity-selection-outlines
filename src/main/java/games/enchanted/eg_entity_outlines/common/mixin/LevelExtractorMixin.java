@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import games.enchanted.eg_entity_outlines.common.render.EntityOutlineExtractor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.extract.LevelExtractor;
 import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +15,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(LevelExtractor.class)
+//? if minecraft: >= 26.2 {
+import net.minecraft.client.renderer.extract.LevelExtractor;
+//? } else {
+/*import net.minecraft.client.renderer.LevelRenderer;
+*///? }
+
+@Mixin(LevelRenderer.class)
 public class LevelExtractorMixin {
     @Shadow
     @Final
