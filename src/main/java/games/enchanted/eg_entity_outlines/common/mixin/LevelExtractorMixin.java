@@ -21,7 +21,13 @@ import net.minecraft.client.renderer.extract.LevelExtractor;
 /*import net.minecraft.client.renderer.LevelRenderer;
 *///? }
 
-@Mixin(LevelRenderer.class)
+@Mixin(
+    //? if minecraft: >= 26.2 {
+    LevelExtractor.class
+    //? } else {
+    /*LevelRenderer.class
+    *///? }
+)
 public class LevelExtractorMixin {
     @Shadow
     @Final
