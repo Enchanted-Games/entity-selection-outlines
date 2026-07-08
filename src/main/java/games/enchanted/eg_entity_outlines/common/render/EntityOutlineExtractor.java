@@ -22,19 +22,14 @@ public class EntityOutlineExtractor {
     public static boolean shouldEntityHaveOutline(Entity entity) {
         if(!ConfigOptions.MOD_ENABLED_OPTION.getValue()) return false;
 
-        if(entity instanceof BlockAttachedEntity && ConfigOptions.OUTLINE_BLOCK_ATTACHED.getValue()) {
-            return true;
-        } else if(entity instanceof ArmorStand && ConfigOptions.OUTLINE_ARMOUR_STANDS.getValue()) {
-            return true;
-        } else if(entity instanceof Boat && ConfigOptions.OUTLINE_BOATS.getValue()) {
-            return true;
-        } else if(entity instanceof Minecart && ConfigOptions.OUTLINE_MINECARTS.getValue()) {
-            return true;
-        } else if(entity instanceof EndCrystal && ConfigOptions.OUTLINE_END_CRYSTALS.getValue()) {
-            return true;
-        }
-
-        return ConfigOptions.OUTLINE_EVERYTHING.getValue();
+        return switch (entity) {
+            case BlockAttachedEntity blockAttachedEntity -> ConfigOptions.OUTLINE_BLOCK_ATTACHED.getValue();
+            case ArmorStand armorStand -> ConfigOptions.OUTLINE_ARMOUR_STANDS.getValue();
+            case Boat boat -> ConfigOptions.OUTLINE_BOATS.getValue();
+            case Minecart minecart -> ConfigOptions.OUTLINE_MINECARTS.getValue();
+            case EndCrystal endCrystal -> ConfigOptions.OUTLINE_END_CRYSTALS.getValue();
+            case null, default -> ConfigOptions.OUTLINE_EVERYTHING.getValue();
+        };
     }
 
     public static @Nullable BlockOutlineRenderState extractRenderState(Camera camera, LevelRenderState levelRenderState, Minecraft minecraft, Entity entity) {

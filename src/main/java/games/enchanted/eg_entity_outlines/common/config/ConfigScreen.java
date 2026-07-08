@@ -59,8 +59,8 @@ public class ConfigScreen extends Screen {
         }
 
         this.grid.newCellSettings().alignHorizontallyCenter();
-        this.grid.columnSpacing(6);
-        this.grid.rowSpacing(4);
+        this.grid.columnSpacing(8);
+        this.grid.rowSpacing(2);
         this.grid.arrangeElements();
         this.grid.visitWidgets(this::addRenderableWidget);
 
