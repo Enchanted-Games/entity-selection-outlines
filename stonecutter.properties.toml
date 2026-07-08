@@ -1,7 +1,7 @@
 [mod]
 id = "eg_entity_outlines"
 name = "Entity Selection Outlines"
-description = "Multi-version, multi-loader mod template for Minecraft using Stonecutter."
+description = "Adds an outline when targeting certain entities including item frames, cushions, paintings, leash knots, armour stands, and end crystals"
 group = "games.enchanted"
 version = "1.0.0"
 license = "CC BY-NC 4.0"
