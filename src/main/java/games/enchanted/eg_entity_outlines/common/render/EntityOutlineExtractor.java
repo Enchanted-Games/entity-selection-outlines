@@ -1,11 +1,14 @@
 package games.enchanted.eg_entity_outlines.common.render;
 
+import games.enchanted.eg_entity_outlines.common.config.ConfigOptions;
+import games.enchanted.eg_entity_outlines.common.config.ConfigScreen;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.decoration.BlockAttachedEntity;
 import net.minecraft.world.entity.vehicle.boat.Boat;
@@ -18,7 +21,21 @@ import org.jspecify.annotations.Nullable;
 
 public class EntityOutlineExtractor {
     public static boolean shouldEntityHaveOutline(Entity entity) {
-        return entity instanceof BlockAttachedEntity || entity instanceof ArmorStand || entity instanceof Boat || entity instanceof Minecart;
+        if(!ConfigOptions.MOD_ENABLED_OPTION.getValue()) return false;
+
+        if(entity instanceof BlockAttachedEntity && ConfigOptions.OUTLINE_BLOCK_ATTACHED.getValue()) {
+            return true;
+        } else if(entity instanceof ArmorStand && ConfigOptions.OUTLINE_ARMOUR_STANDS.getValue()) {
+            return true;
+        } else if(entity instanceof Boat && ConfigOptions.OUTLINE_BOATS.getValue()) {
+            return true;
+        } else if(entity instanceof Minecart && ConfigOptions.OUTLINE_MINECARTS.getValue()) {
+            return true;
+        } else if(entity instanceof EndCrystal && ConfigOptions.OUTLINE_END_CRYSTALS.getValue()) {
+            return true;
+        }
+        
+        return ConfigOptions.OUTLINE_EVERYTHING.getValue();
     }
 
     public static @Nullable BlockOutlineRenderState extractRenderState(Camera camera, LevelRenderState levelRenderState, Minecraft minecraft, Entity entity) {
