@@ -1,0 +1,24 @@
+{
+    "eg_entity_outlines.configScreen.title": "Entity Selection Outlines Config",
+
+    "eg_entity_outlines.option.mod_enabled": "Enable Mod",
+    "eg_entity_outlines.option.mod_enabled.tooltip": "Disable the entire mod",
+
+    "eg_entity_outlines.option.outline_block_attached": "Outline Block Attached",
+    "eg_entity_outlines.option.outline_block_attached.tooltip": "Whether outlines should show when looking at block attached entities such as item frames, paintings, cushions, or leash knots",
+
+    "eg_entity_outlines.option.outline_armour_stands": "Outline Armour Stands",
+    "eg_entity_outlines.option.outline_armour_stands.tooltip": "Whether outlines should show when looking at armour stands",
+
+    "eg_entity_outlines.option.outline_boats": "Outline Boats",
+    "eg_entity_outlines.option.outline_boats.tooltip": "Whether outlines should show when looking at boats",
+
+    "eg_entity_outlines.option.outline_minecarts": "Outline Minecarts",
+    "eg_entity_outlines.option.outline_minecarts.tooltip": "Whether outlines should show when looking at minecarts",
+
+    "eg_entity_outlines.option.outline_end_crystals": "Outline End Crystals",
+    "eg_entity_outlines.option.outline_end_crystals.tooltip": "Whether outlines should show when looking at end crystals",
+
+    "eg_entity_outlines.option.outline_everything": "Outline Everything",
+    "eg_entity_outlines.option.outline_everything.tooltip": "Should outlines show for every entity? This respects the other options, for example if 'Outline Boats' is disabled and this is enabled, everything except boats will have an outline"
+}
