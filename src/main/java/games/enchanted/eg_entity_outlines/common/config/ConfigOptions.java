@@ -68,6 +68,10 @@ public class ConfigOptions {
         return PlatformHelper.getConfigPath().resolve(FILE_NAME).toFile();
     }
 
+    public static boolean hasDirtyOptions() {
+        return OPTIONS.stream().anyMatch(ConfigOption::isDirty);
+    }
+
     public static void saveIfAnyDirtyOptions() {
         if(OPTIONS.stream().noneMatch(ConfigOption::isDirty)) return;
         for (ConfigOption<?> option : OPTIONS) {

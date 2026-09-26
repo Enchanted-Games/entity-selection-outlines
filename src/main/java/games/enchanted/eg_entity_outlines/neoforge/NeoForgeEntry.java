@@ -3,7 +3,7 @@
 
 import games.enchanted.eg_entity_outlines.common.ModConstants;
 import games.enchanted.eg_entity_outlines.common.ModEntry;
-import games.enchanted.eg_entity_outlines.common.config.ConfigScreen;
+import games.enchanted.eg_entity_outlines.common.gui.screen.ConfigScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.network.chat.Component;
