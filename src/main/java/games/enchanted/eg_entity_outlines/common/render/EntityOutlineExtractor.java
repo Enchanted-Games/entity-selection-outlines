@@ -31,7 +31,7 @@ public class EntityOutlineExtractor {
         if(minecraft.level == null) return null;
 
         BlockPos entityBlockPos = entity.blockPosition();
-        boolean highContrast = minecraft.options.highContrastBlockOutline().get();
+        boolean highContrast = ConfigOptions.ALWAYS_USE_HIGH_CONTRAST.getValue() || minecraft.options.highContrastBlockOutline().get();
         float partialTicks = minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(!minecraft.level.tickRateManager().isEntityFrozen(entity));
 
         Vec3 latestPosition = entity.position();
