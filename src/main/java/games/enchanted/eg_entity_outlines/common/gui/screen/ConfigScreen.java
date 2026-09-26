@@ -1,8 +1,10 @@
 package games.enchanted.eg_entity_outlines.common.gui.screen;
 
 import games.enchanted.eg_entity_outlines.common.config.ConfigOptions;
+import games.enchanted.eg_entity_outlines.common.config.EntityWhitelist;
 import games.enchanted.eg_entity_outlines.common.gui.widget.option.OnOffWidget;
 import games.enchanted.eg_entity_outlines.common.gui.widget.option.OptionWidget;
+import games.enchanted.eg_entity_outlines.common.gui.widget.whitelist.WhitelistEntryProxy;
 import games.enchanted.eg_entity_outlines.common.gui.widget.scroll.OptionsList;
 import games.enchanted.eg_entity_outlines.common.util.ComponentUtil;
 import games.enchanted.eg_entity_outlines.common.util.ScreenUtil;
@@ -14,12 +16,16 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class ConfigScreen extends Screen {
+public class ConfigScreen extends Screen implements WhitelistEntryProxy {
     private static final Component TITLE = Component.translatable("gui.eg_entity_outlines.configScreen.title");
     protected static final int FOOTER_BUTTON_WIDTH = 98;
 
@@ -34,9 +40,16 @@ public class ConfigScreen extends Screen {
 
     protected final ArrayList<OptionWidget<?>> optionWidgets = new ArrayList<>();
 
+    protected final Map<Identifier, Boolean> proxyWhitelistEntryModification = new HashMap<>();
+
     protected ConfigScreen(Screen parent, Component title) {
         super(title);
         this.parent = parent;
+
+
+        for (Identifier id : ConfigOptions.ENTITY_WHITELIST.getValue().allEntries()) {
+            this.setWhitelistEntryEnabled(id, true);
+        }
     }
     protected ConfigScreen(Screen parent) {
         this(parent, TITLE);
@@ -118,7 +131,7 @@ public class ConfigScreen extends Screen {
         optionsList.addOption(
             Button.builder(
                 ComponentUtil.MODIFY_WHITELIST,
-                button -> ScreenUtil.setScreen(this.minecraft, new EntityWhitelistScreen(this, ConfigOptions.ENTITY_WHITELIST))
+                button -> ScreenUtil.setScreen(this.minecraft, new EntityWhitelistScreen(this, this, ConfigOptions.ENTITY_WHITELIST))
             ).build()
         );
         optionsList.addOption(
@@ -135,7 +148,7 @@ public class ConfigScreen extends Screen {
         }
     }
 
-    private void visitOptionList(OptionsList optionsList) {
+    protected void visitOptionList(OptionsList optionsList) {
         optionsList.visitChildren(widget -> {
             if(!(widget instanceof OptionWidget<?> optionWidget)) return;
             optionWidget.onChange(this::refreshOptionWidgetVisuals);
@@ -148,18 +161,38 @@ public class ConfigScreen extends Screen {
         return !this.hasPendingChanges();
     }
 
-    private void undoChanges() {
+    protected void undoChanges() {
         ConfigOptions.clearAllPendingValues();
+        this.proxyWhitelistEntryModification.clear();
         this.refreshOptionWidgetValues();
     }
 
-    private void saveChanges() {
+    protected void saveChanges() {
+        List<Identifier> enabledEntityTypesList = new ArrayList<>();
+        for (Map.Entry<Identifier, Boolean> entry : this.proxyWhitelistEntryModification.entrySet()) {
+            if(!entry.getValue()) continue;
+            enabledEntityTypesList.add(entry.getKey());
+        }
+
+        EntityWhitelist whitelist = EntityWhitelist.createAndVerify(enabledEntityTypesList, List.of());
+        ConfigOptions.ENTITY_WHITELIST.setPendingValue(whitelist);
+
         ConfigOptions.saveIfAnyDirtyOptions();
         this.refreshOptionWidgetValues();
     }
 
     protected boolean hasPendingChanges() {
-        return ConfigOptions.hasDirtyOptionsDifferentFromCurrent();
+        return ConfigOptions.hasDirtyOptionsDifferentFromCurrent() || this.isWhitelistModificationActuallyPending();
+    }
+
+    private boolean isWhitelistModificationActuallyPending() {
+        boolean somethingIsDifferent = false;
+        for (Map.Entry<Identifier, Boolean> entry : this.proxyWhitelistEntryModification.entrySet()) {
+            if(ConfigOptions.ENTITY_WHITELIST.getValue().containsEntity(entry.getKey()) == entry.getValue()) continue;
+            somethingIsDifferent = true;
+            break;
+        }
+        return somethingIsDifferent;
     }
 
     protected void refreshOptionWidgetValues() {
@@ -186,7 +219,7 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(@NonNull MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         boolean val = super.mouseClicked(event, doubleClick);
         this.updateFooterButtonState();
         return val;
@@ -214,5 +247,15 @@ public class ConfigScreen extends Screen {
         }
 
         this.refreshOptionWidgetVisuals();
+    }
+
+    @Override
+    public void setWhitelistEntryEnabled(Identifier identifier, boolean enabled) {
+        this.proxyWhitelistEntryModification.put(identifier, enabled);
+    }
+
+    @Override
+    public boolean isEntryEnabled(Identifier identifier) {
+        return this.proxyWhitelistEntryModification.getOrDefault(identifier, false);
     }
 }

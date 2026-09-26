@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record EntityWhitelist(List<Identifier> whitelistedTypes, List<Identifier> unregisteredWhitelistedTypes) {
@@ -45,5 +46,12 @@ public record EntityWhitelist(List<Identifier> whitelistedTypes, List<Identifier
 
     public boolean containsEntity(Identifier entityId) {
         return this.whitelistedTypes.contains(entityId) || this.unregisteredWhitelistedTypes.contains(entityId);
+    }
+
+    public List<Identifier> allEntries() {
+        List<Identifier> list = new ArrayList<>();
+        list.addAll(this.whitelistedTypes);
+        list.addAll(this.unregisteredWhitelistedTypes);
+        return list;
     }
 }

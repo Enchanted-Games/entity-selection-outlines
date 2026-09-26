@@ -1,6 +1,5 @@
 package games.enchanted.eg_entity_outlines.common.gui.widget.option;
 
-import games.enchanted.eg_entity_outlines.common.config.option.BoolOption;
 import games.enchanted.eg_entity_outlines.common.config.option.ConfigOption;
 import games.enchanted.eg_entity_outlines.common.util.ComponentUtil;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

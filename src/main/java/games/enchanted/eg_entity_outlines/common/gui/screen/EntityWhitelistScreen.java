@@ -3,14 +3,14 @@ package games.enchanted.eg_entity_outlines.common.gui.screen;
 import games.enchanted.eg_entity_outlines.common.ModConstants;
 import games.enchanted.eg_entity_outlines.common.config.EntityWhitelist;
 import games.enchanted.eg_entity_outlines.common.config.option.ConfigOption;
+import games.enchanted.eg_entity_outlines.common.gui.widget.whitelist.EntityWhitelistEntryWidget;
+import games.enchanted.eg_entity_outlines.common.gui.widget.whitelist.WhitelistEntryProxy;
 import games.enchanted.eg_entity_outlines.common.gui.widget.scroll.OptionsList;
 import games.enchanted.eg_entity_outlines.common.util.ComponentUtil;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
@@ -28,14 +28,23 @@ public class EntityWhitelistScreen extends ConfigScreen {
     private static final int SEARCH_BOX_PADDING = 2;
     private static final int SEARCH_BOX_HEIGHT = 15;
 
+    final ConfigScreen configParent;
+    final ConfigOption<EntityWhitelist> whitelistOption;
+
+    final WhitelistEntryProxy whitelistEntryProxy;
     final List<EntityTypeNameAndId> entityTypes;
     @Nullable List<EntityTypeNameAndId> filteredTypes;
     Map<EntityTypeNameAndId, OptionsList.WidgetPosition> typeToPosition = Map.of();
 
     @Nullable EditBox searchBox;
 
-    protected EntityWhitelistScreen(Screen parent, ConfigOption<EntityWhitelist> whitelistOption) {
+    protected EntityWhitelistScreen(ConfigScreen parent, WhitelistEntryProxy whitelistEntryProxy, ConfigOption<EntityWhitelist> whitelistOption) {
         super(parent, ComponentUtil.MODIFY_WHITELIST);
+
+        this.configParent = parent;
+        this.whitelistOption = whitelistOption;
+        this.whitelistEntryProxy = whitelistEntryProxy;
+
         this.entityTypes = ModConstants.knownEntityTypes().stream().map(identifier -> {
             Optional<Holder.Reference<EntityType<?>>> type = BuiltInRegistries.ENTITY_TYPE.get(identifier);
             if(type.isEmpty()) {
@@ -73,7 +82,12 @@ public class EntityWhitelistScreen extends ConfigScreen {
         for (EntityTypeNameAndId type : this.entityTypes) {
             map.put(
                 type,
-                optionsList.addBigOption(FocusableTextWidget.builder(Component.literal(type.name()), this.font).build())
+                optionsList.addBigOption(new EntityWhitelistEntryWidget(
+                    this.whitelistOption.getValue().containsEntity(type.id()),
+                    this.whitelistEntryProxy.isEntryEnabled(type.id()),
+                    type,
+                    this.whitelistEntryProxy
+                ))
             );
         }
 
@@ -137,6 +151,33 @@ public class EntityWhitelistScreen extends ConfigScreen {
 
         if(this.searchBox == null) return;
         this.searchBox.setPosition((this.width / 2) - (this.searchBox.getWidth() / 2), this.layout.getHeaderHeight() - SEARCH_BOX_PADDING + SEARCH_BOX_OFFSET);
+    }
+
+    @Override
+    protected void undoChanges() {
+        if(this.optionsList == null) return;
+        this.optionsList.visitChildren(widget -> {
+            if(!(widget instanceof EntityWhitelistEntryWidget whitelistWidget)) return;
+            whitelistWidget.resetPendingChanges();
+        });
+
+        this.configParent.undoChanges();
+    }
+
+    @Override
+    protected void saveChanges() {
+        if(this.optionsList == null) return;
+        this.optionsList.visitChildren(widget -> {
+            if(!(widget instanceof EntityWhitelistEntryWidget whitelistWidget)) return;
+            whitelistWidget.applyPendingChanges();
+        });
+
+        this.configParent.saveChanges();
+    }
+
+    @Override
+    protected boolean hasPendingChanges() {
+        return this.configParent.hasPendingChanges();
     }
 
     public record EntityTypeNameAndId(String name, Identifier id) {
