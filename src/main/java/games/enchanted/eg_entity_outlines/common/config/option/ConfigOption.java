@@ -2,8 +2,8 @@ package games.enchanted.eg_entity_outlines.common.config.option;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public abstract class ConfigOption<T> {
     private @Nullable T pendingValue;
@@ -38,7 +38,7 @@ public abstract class ConfigOption<T> {
         return this.pendingValue == null ? this.value : this.pendingValue;
     }
 
-    public void setPendingValue(@NotNull T value) {
+    public void setPendingValue(@NonNull T value) {
         this.pendingValue = value;
     }
 
@@ -75,7 +75,7 @@ public abstract class ConfigOption<T> {
         }
     }
 
-    public abstract JsonElement toJson();
+    public abstract @Nullable JsonElement toJson();
 
     public abstract void fromJson(JsonObject json);
 

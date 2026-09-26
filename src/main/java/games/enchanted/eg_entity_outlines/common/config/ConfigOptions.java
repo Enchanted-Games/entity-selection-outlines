@@ -7,6 +7,8 @@ import games.enchanted.eg_entity_outlines.common.ModConstants;
 import games.enchanted.eg_entity_outlines.common.PlatformHelper;
 import games.enchanted.eg_entity_outlines.common.config.option.BoolOption;
 import games.enchanted.eg_entity_outlines.common.config.option.ConfigOption;
+import games.enchanted.eg_entity_outlines.common.config.option.EntityWhitelistOption;
+import net.minecraft.world.entity.EntityTypeIds;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -33,10 +35,25 @@ public class ConfigOptions {
         "outline_everything"
     ));
 
+
     public static final ConfigOption<Boolean> INVERT_WHITELIST = registerOption(new BoolOption(
         false,
         false,
         "invert_whitelist"
+    ));
+
+    public static final ConfigOption<EntityWhitelist> ENTITY_WHITELIST = registerOption(new EntityWhitelistOption(
+        EntityWhitelist.create(List.of(
+            EntityTypeIds.CUSHION,
+            EntityTypeIds.ITEM_FRAME,
+            EntityTypeIds.GLOW_ITEM_FRAME,
+            EntityTypeIds.LEASH_KNOT,
+            EntityTypeIds.PAINTING,
+            EntityTypeIds.ARMOR_STAND,
+            EntityTypeIds.END_CRYSTAL,
+            EntityTypeIds.FALLING_BLOCK
+        )),
+        "entity_whitelist"
     ));
 
     private static <T> ConfigOption<T> registerOption(ConfigOption<T> option) {
@@ -70,7 +87,12 @@ public class ConfigOptions {
         JsonObject root = new JsonObject();
 
         for (ConfigOption<?> option : OPTIONS) {
-            root.add(option.getJsonKey(), option.toJson());
+            JsonElement encoded = option.toJson();
+            if(encoded == null) {
+                Logging.warn("Config value '{}' will not be saved as it couldn't be encoded.", option.getJsonKey());
+                continue;
+            }
+            root.add(option.getJsonKey(), encoded);
         }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -95,11 +117,22 @@ public class ConfigOptions {
             Logging.error("Failed to parse config file '{}', {}", FILE_NAME, e);
         } catch (FileNotFoundException e) {
             Logging.info("Config file '{}' not found", FILE_NAME);
-            saveConfig();
         }
 
+        boolean requireResave = false;
+
         for (ConfigOption<?> option : OPTIONS) {
-            option.fromJson(decodedConfig);
+            try {
+                option.fromJson(decodedConfig);
+            } catch (Exception e) {
+                Logging.warn("An exception occurred while decoding config option '{}'.\n{}", option.getJsonKey(), e);
+                option.resetToDefault(true);
+                requireResave = true;
+            }
+        }
+
+        if(requireResave) {
+            saveConfig();
         }
     }
 

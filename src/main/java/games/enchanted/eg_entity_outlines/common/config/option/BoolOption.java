@@ -3,6 +3,7 @@ package games.enchanted.eg_entity_outlines.common.config.option;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.jspecify.annotations.Nullable;
 
 public class BoolOption extends ConfigOption<Boolean> {
     public BoolOption(Boolean initialValue, Boolean defaultValue, String jsonKey) {
@@ -10,7 +11,7 @@ public class BoolOption extends ConfigOption<Boolean> {
     }
 
     @Override
-    public JsonElement toJson() {
+    public @Nullable JsonElement toJson() {
         return new JsonPrimitive(getValue());
     }
 

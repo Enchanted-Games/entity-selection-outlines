@@ -22,9 +22,9 @@ public class EntityOutlineExtractor {
     public static boolean shouldEntityHaveOutline(Entity entity) {
         if(!ConfigOptions.MOD_ENABLED_OPTION.getValue()) return false;
 
-        return switch (entity) {
-            case null, default -> ConfigOptions.OUTLINE_EVERYTHING.getValue();
-        };
+        boolean outlineEntity = ConfigOptions.ENTITY_WHITELIST.getValue().containsEntity(entity.getType());
+
+        return ConfigOptions.INVERT_WHITELIST.getValue() != outlineEntity;
     }
 
     public static @Nullable BlockOutlineRenderState extractRenderState(Camera camera, LevelRenderState levelRenderState, Minecraft minecraft, Entity entity) {
