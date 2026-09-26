@@ -1,24 +1,25 @@
 {
-    "eg_entity_outlines.configScreen.title": "Entity Selection Outlines Config",
+    "gui.eg_entity_outlines.configScreen.title": "Entity Selection Outlines Config",
 
-    "eg_entity_outlines.option.mod_enabled": "Enable Mod",
-    "eg_entity_outlines.option.mod_enabled.tooltip": "Disable the entire mod",
+    "gui.eg_entity_outlines.category.general": "General",
+    "gui.eg_entity_outlines.category.entity_whitelist": "Entity Whitelist",
 
-    "eg_entity_outlines.option.outline_block_attached": "Outline Block Attached",
-    "eg_entity_outlines.option.outline_block_attached.tooltip": "Whether outlines should show when looking at block attached entities such as item frames, paintings, cushions, or leash knots",
 
-    "eg_entity_outlines.option.outline_armour_stands": "Outline Armour Stands",
-    "eg_entity_outlines.option.outline_armour_stands.tooltip": "Whether outlines should show when looking at armour stands",
+    "gui.eg_entity_outlines.button.modify_whitelist": "Modify Whitelist...",
+    "gui.eg_entity_outlines.button.undo": "Undo",
+    "gui.eg_entity_outlines.button.apply": "Apply",
 
-    "eg_entity_outlines.option.outline_boats": "Outline Boats",
-    "eg_entity_outlines.option.outline_boats.tooltip": "Whether outlines should show when looking at boats",
 
-    "eg_entity_outlines.option.outline_minecarts": "Outline Minecarts",
-    "eg_entity_outlines.option.outline_minecarts.tooltip": "Whether outlines should show when looking at minecarts",
+    "gui.eg_entity_outlines.option.mod_enabled": "Enable Mod",
+    "gui.eg_entity_outlines.option.mod_enabled.tooltip": "Disable the entire mod",
 
-    "eg_entity_outlines.option.outline_end_crystals": "Outline End Crystals",
-    "eg_entity_outlines.option.outline_end_crystals.tooltip": "Whether outlines should show when looking at end crystals",
+    "gui.eg_entity_outlines.option.always_use_high_contrast": "Always use High Contrast",
+    "gui.eg_entity_outlines.option.always_use_high_contrast.tooltip": "When enabled, always uses the high contrast outline style when targeting an entity. When disabled, the mod uses the vanilla accessibility setting to determine which outline style to use",
 
-    "eg_entity_outlines.option.outline_everything": "Outline Everything",
-    "eg_entity_outlines.option.outline_everything.tooltip": "Should outlines show for every entity? This respects the other options, for example if 'Outline Boats' is disabled and this is enabled, everything except boats will have an outline"
+    "gui.eg_entity_outlines.option.outline_everything": "Outline Everything",
+    "gui.eg_entity_outlines.option.outline_everything.tooltip": "When enabled, completely ignores the entity whitelist and outlines every targetable entity",
+
+
+    "gui.eg_entity_outlines.option.invert_whitelist": "Invert Whitelist",
+    "gui.eg_entity_outlines.option.invert_whitelist.tooltip": "When enabled, treats the whitelist as a blacklist; any entity that is enabled in the whitelist will not be outlined and vice-versa"
 }

@@ -4,6 +4,7 @@ import games.enchanted.eg_entity_outlines.common.config.ConfigOptions;
 import games.enchanted.eg_entity_outlines.common.gui.widget.option.OnOffWidget;
 import games.enchanted.eg_entity_outlines.common.gui.widget.option.OptionWidget;
 import games.enchanted.eg_entity_outlines.common.gui.widget.scroll.OptionsList;
+import games.enchanted.eg_entity_outlines.common.util.ComponentUtil;
 import games.enchanted.eg_entity_outlines.common.util.ScreenUtil;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -19,7 +20,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 
 public class ConfigScreen extends Screen {
-    private static final Component TITLE = Component.translatable("options.videoTitle");
+    private static final Component TITLE = Component.translatable("gui.eg_entity_outlines.configScreen.title");
     protected static final int FOOTER_BUTTON_WIDTH = 98;
 
     protected final Screen parent;
@@ -76,10 +77,10 @@ public class ConfigScreen extends Screen {
     protected void createFooterWidgets() {
         LinearLayout footerLayout = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
         this.undoButton = footerLayout.addChild(
-            Button.builder(Component.literal("undo"), button -> this.undoChanges()).width(FOOTER_BUTTON_WIDTH).build()
+            Button.builder(ComponentUtil.UNDO, button -> this.undoChanges()).width(FOOTER_BUTTON_WIDTH).build()
         );
         this.applyButton = footerLayout.addChild(
-            Button.builder(Component.literal("apply"), button -> this.saveChanges()).width(FOOTER_BUTTON_WIDTH).build()
+            Button.builder(ComponentUtil.APPLY, button -> this.saveChanges()).width(FOOTER_BUTTON_WIDTH).build()
         );
         this.doneButton = footerLayout.addChild(
             this.buildDoneButtonWidget()
@@ -92,7 +93,7 @@ public class ConfigScreen extends Screen {
 
     protected void buildOptionWidgets(OptionsList optionsList) {
         optionsList.addCategoryHeader(
-            Component.literal("general")
+            ComponentUtil.GENERAL_CATEGORY.copy()
                 .withStyle(style -> style.withBold(true).withUnderlined(true))
         );
         optionsList.addBigOption(
@@ -107,12 +108,12 @@ public class ConfigScreen extends Screen {
 
         optionsList.addSpacer(10);
         optionsList.addCategoryHeader(
-            Component.literal("entity whitelist")
+            ComponentUtil.WHITELIST_CATEGORY.copy()
                 .withStyle(style -> style.withBold(true).withUnderlined(true))
         );
         optionsList.addOption(
             Button.builder(
-                Component.literal("modify whitelist..."),
+                ComponentUtil.MODIFY_WHITELIST,
                 button -> ScreenUtil.setScreen(this.minecraft, new EntityWhitelistScreen(this, ConfigOptions.ENTITY_WHITELIST))
             ).build()
         );
