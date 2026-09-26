@@ -58,7 +58,7 @@ public class ConfigScreen extends Screen {
     }
 
     protected void createSingleColumnLayout() {
-        this.layout.addTitleHeader(this.title, this.font);
+        this.createHeader(this.layout);
         int headerHeight = this.layout.getHeaderHeight();
 
         this.createFooterWidgets();
@@ -72,6 +72,10 @@ public class ConfigScreen extends Screen {
         this.addRenderableWidget(this.optionsList);
 
         this.buildOptionWidgets(this.optionsList);
+    }
+
+    protected void createHeader(HeaderAndFooterLayout layout) {
+        this.layout.addTitleHeader(this.title, this.font);
     }
 
     protected void createFooterWidgets() {

@@ -1,5 +1,6 @@
 package games.enchanted.eg_entity_outlines.common.gui.widget.scroll;
 
+import games.enchanted.eg_entity_outlines.common.Logging;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -71,6 +72,20 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
     public void addSpacer(int height) {
         this.lastEntry = null;
         this.addChild(new SpacerEntry(height));
+    }
+
+
+    public void setWidgetVisibility(WidgetPosition position, boolean visible) {
+        Entry entry = this.children().get(position.entryIndex());
+        if(!(entry instanceof OptionEntry optionEntry)) {
+            Logging.warn("Cannot set visibility of non-option widget");
+            return;
+        }
+        if(position.secondary() && optionEntry.secondChild != null) {
+            optionEntry.secondChild.visible = visible;
+        } else {
+            optionEntry.child.visible = visible;
+        }
     }
 
 
@@ -255,6 +270,14 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
         public List<? extends GuiEventListener> children() {
             if(secondChild != null) return List.of(child, secondChild);
             return List.of(child);
+        }
+
+        @Override
+        protected int height() {
+            if(!this.child.visible && !(this.secondChild != null && this.secondChild.visible)) {
+                return 0;
+            }
+            return super.height();
         }
     }
 
