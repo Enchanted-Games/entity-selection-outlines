@@ -92,7 +92,7 @@ public class ConfigScreen extends Screen {
 
     protected void buildOptionWidgets(OptionsList optionsList) {
         optionsList.addCategoryHeader(
-            Component.literal("General")
+            Component.literal("general")
                 .withStyle(style -> style.withBold(true).withUnderlined(true))
         );
         optionsList.addBigOption(
@@ -105,12 +105,18 @@ public class ConfigScreen extends Screen {
             new OnOffWidget(0, 0, ConfigOptions.OUTLINE_EVERYTHING)
         );
 
-        optionsList.addSpacer(12);
+        optionsList.addSpacer(10);
         optionsList.addCategoryHeader(
-            Component.literal("Entity Whitelist")
+            Component.literal("entity whitelist")
                 .withStyle(style -> style.withBold(true).withUnderlined(true))
         );
-        optionsList.addBigOption(
+        optionsList.addOption(
+            Button.builder(
+                Component.literal("modify whitelist..."),
+                button -> ScreenUtil.setScreen(this.minecraft, new EntityWhitelistScreen(this, ConfigOptions.ENTITY_WHITELIST))
+            ).build()
+        );
+        optionsList.addOption(
             new OnOffWidget(0, 0, ConfigOptions.INVERT_WHITELIST)
         );
     }
