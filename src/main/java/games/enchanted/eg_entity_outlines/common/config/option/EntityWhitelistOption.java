@@ -43,6 +43,7 @@ public class EntityWhitelistOption extends ConfigOption<EntityWhitelist> {
 
         if(result.isSuccess() && result.result().isPresent()) {
             this.setValueOrPending(result.result().get().getFirst());
+            return;
         }
 
         if(result.isError() && result.error().isPresent()) {
