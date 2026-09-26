@@ -23,8 +23,29 @@ public record EntityWhitelist(List<Identifier> whitelistedTypes, List<Identifier
     );
 
     public static EntityWhitelist createAndVerify(List<Identifier> whitelistedTypes, List<Identifier> unregisteredWhitelistedTypes) {
-        // TODO: check registration of entity types here
-        return new EntityWhitelist(whitelistedTypes, unregisteredWhitelistedTypes);
+        List<Identifier> verifiedWhitelistedTypes = new ArrayList<>();
+        List<Identifier> verifiedUnregisteredWhitelistedTypes = new ArrayList<>();
+
+        for (Identifier type : whitelistedTypes) {
+            if(isValidEntityType(type)) {
+                verifiedWhitelistedTypes.add(type);
+                continue;
+            }
+            verifiedUnregisteredWhitelistedTypes.add(type);
+        }
+        for (Identifier type : unregisteredWhitelistedTypes) {
+            if(isValidEntityType(type)) {
+                verifiedWhitelistedTypes.add(type);
+                continue;
+            }
+            verifiedUnregisteredWhitelistedTypes.add(type);
+        }
+
+        return new EntityWhitelist(verifiedWhitelistedTypes, verifiedUnregisteredWhitelistedTypes);
+    }
+
+    private static boolean isValidEntityType(Identifier id) {
+        return BuiltInRegistries.ENTITY_TYPE.containsKey(id);
     }
 
     public static EntityWhitelist create(List<ResourceKey<EntityType<?>>> whitelistedTypes) {
