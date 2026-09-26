@@ -91,8 +91,27 @@ public class ConfigScreen extends Screen {
     }
 
     protected void buildOptionWidgets(OptionsList optionsList) {
+        optionsList.addCategoryHeader(
+            Component.literal("General")
+                .withStyle(style -> style.withBold(true).withUnderlined(true))
+        );
         optionsList.addBigOption(
             new OnOffWidget(0, 0, ConfigOptions.MOD_ENABLED_OPTION)
+        );
+        optionsList.addBigOption(
+            new OnOffWidget(0, 0, ConfigOptions.ALWAYS_USE_HIGH_CONTRAST)
+        );
+        optionsList.addBigOption(
+            new OnOffWidget(0, 0, ConfigOptions.OUTLINE_EVERYTHING)
+        );
+
+        optionsList.addSpacer(12);
+        optionsList.addCategoryHeader(
+            Component.literal("Entity Whitelist")
+                .withStyle(style -> style.withBold(true).withUnderlined(true))
+        );
+        optionsList.addBigOption(
+            new OnOffWidget(0, 0, ConfigOptions.INVERT_WHITELIST)
         );
     }
 
@@ -129,7 +148,7 @@ public class ConfigScreen extends Screen {
     }
 
     protected boolean hasPendingChanges() {
-        return ConfigOptions.hasDirtyOptions();
+        return ConfigOptions.hasDirtyOptionsDifferentFromCurrent();
     }
 
     protected void refreshOptionWidgetValues() {

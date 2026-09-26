@@ -34,7 +34,7 @@ public class OnOffWidget extends Button implements OptionWidget<ConfigOption<Boo
             ComponentUtil.createOptionName(this.option),
             this.value ? CommonComponents.OPTION_ON : CommonComponents.OPTION_OFF,
             this.isActive(),
-            this.option.isDirty()
+            this.option.isDirtyDifferentFromCurrent()
         );
         this.setTooltip(Tooltip.create(ComponentUtil.createOptionTooltip(this.option)));
     }

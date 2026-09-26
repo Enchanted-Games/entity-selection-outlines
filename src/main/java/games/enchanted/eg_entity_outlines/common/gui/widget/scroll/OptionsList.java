@@ -266,12 +266,12 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
 
         CategoryHeaderEntry(Component header) {
             super();
-            setMargins(new Margin(2, 0, LEFT_TEXT_OFFSET, 0));
+            setMargins(new Margin(8, 2, LEFT_TEXT_OFFSET, 0));
             this.title = header;
         }
 
         protected int getTextColour() {
-            return CommonColors.TEXT_GRAY;
+            return CommonColors.WHITE;
         }
 
         @Override
@@ -283,10 +283,10 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
         public void extractContent(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean hovered, float partialTick) {
             super.extractContent(graphics, mouseX, mouseY, hovered, partialTick);
 
-            graphics.text(
+            graphics.centeredText(
                 this.font,
                 this.title,
-                this.getContentX(),
+                this.getContentX() + (this.getContentWidth() / 2),
                 this.getContentY(),
                 this.getTextColour()
             );

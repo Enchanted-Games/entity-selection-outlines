@@ -21,40 +21,22 @@ public class ConfigOptions {
         "mod_enabled"
     ));
 
-    public static final ConfigOption<Boolean> OUTLINE_BLOCK_ATTACHED = registerOption(new BoolOption(
-        true,
-        true,
-        "outline_block_attached"
-    ));
-
-    public static final ConfigOption<Boolean> OUTLINE_ARMOUR_STANDS = registerOption(new BoolOption(
-        true,
-        true,
-        "outline_armour_stands"
-    ));
-
-    public static final ConfigOption<Boolean> OUTLINE_END_CRYSTALS = registerOption(new BoolOption(
-        true,
-        true,
-        "outline_end_crystals"
-    ));
-
-    public static final ConfigOption<Boolean> OUTLINE_BOATS = registerOption(new BoolOption(
+    public static final ConfigOption<Boolean> ALWAYS_USE_HIGH_CONTRAST = registerOption(new BoolOption(
         false,
         false,
-        "outline_boats"
-    ));
-
-    public static final ConfigOption<Boolean> OUTLINE_MINECARTS = registerOption(new BoolOption(
-        false,
-        false,
-        "outline_minecarts"
+        "always_use_high_contrast"
     ));
 
     public static final ConfigOption<Boolean> OUTLINE_EVERYTHING = registerOption(new BoolOption(
         false,
         false,
         "outline_everything"
+    ));
+
+    public static final ConfigOption<Boolean> INVERT_WHITELIST = registerOption(new BoolOption(
+        false,
+        false,
+        "invert_whitelist"
     ));
 
     private static <T> ConfigOption<T> registerOption(ConfigOption<T> option) {
@@ -70,6 +52,10 @@ public class ConfigOptions {
 
     public static boolean hasDirtyOptions() {
         return OPTIONS.stream().anyMatch(ConfigOption::isDirty);
+    }
+
+    public static boolean hasDirtyOptionsDifferentFromCurrent() {
+        return OPTIONS.stream().anyMatch(ConfigOption::isDirtyDifferentFromCurrent);
     }
 
     public static void saveIfAnyDirtyOptions() {

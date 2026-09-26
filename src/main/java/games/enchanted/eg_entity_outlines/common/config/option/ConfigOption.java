@@ -82,4 +82,8 @@ public abstract class ConfigOption<T> {
     public boolean isDirty() {
         return this.pendingValue != null;
     }
+
+    public boolean isDirtyDifferentFromCurrent() {
+        return this.isDirty() && !this.value.equals(this.pendingValue);
+    }
 }

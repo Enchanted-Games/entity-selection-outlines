@@ -23,11 +23,6 @@ public class EntityOutlineExtractor {
         if(!ConfigOptions.MOD_ENABLED_OPTION.getValue()) return false;
 
         return switch (entity) {
-            case BlockAttachedEntity blockAttachedEntity -> ConfigOptions.OUTLINE_BLOCK_ATTACHED.getValue();
-            case ArmorStand armorStand -> ConfigOptions.OUTLINE_ARMOUR_STANDS.getValue();
-            case Boat boat -> ConfigOptions.OUTLINE_BOATS.getValue();
-            case Minecart minecart -> ConfigOptions.OUTLINE_MINECARTS.getValue();
-            case EndCrystal endCrystal -> ConfigOptions.OUTLINE_END_CRYSTALS.getValue();
             case null, default -> ConfigOptions.OUTLINE_EVERYTHING.getValue();
         };
     }
