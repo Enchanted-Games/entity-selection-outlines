@@ -46,16 +46,20 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
             return new WidgetPosition(this.children().size() - 1, true);
         }
         child.setWidth(DEFAULT_CHILD_WIDTH);
-        OptionEntry entry = new OptionEntry(child);
+        OptionEntry entry = new OptionEntry(child, DEFAULT_CHILD_HEIGHT);
         this.lastEntry = entry;
         this.addChild(entry);
         return new WidgetPosition(this.children().size() - 1, false);
     }
 
     public WidgetPosition addBigOption(AbstractWidget child) {
+        return this.addBigOption(child, DEFAULT_CHILD_HEIGHT);
+    }
+
+    public WidgetPosition addBigOption(AbstractWidget child, int height) {
         this.lastEntry = null;
         child.setWidth(ROW_WIDTH);
-        this.addChild(new OptionEntry(child));
+        this.addChild(new OptionEntry(child, height));
         return new WidgetPosition(this.children().size() - 1, false);
     }
 
@@ -223,11 +227,13 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
         final AbstractWidget child;
         @Nullable AbstractWidget secondChild;
         boolean lastInCategory = false;
+        final int height;
 
-        OptionEntry(AbstractWidget widget) {
+        OptionEntry(AbstractWidget widget, int height) {
             super();
             setMargins(new Margin(0, 0));
             this.child = widget;
+            this.height = height;
         }
 
         void setSecondChild(AbstractWidget child) {
@@ -277,7 +283,7 @@ public class OptionsList extends VerticalScrollContainerWidget<OptionsList.Entry
             if(!this.child.visible && !(this.secondChild != null && this.secondChild.visible)) {
                 return 0;
             }
-            return super.height();
+            return this.height;
         }
     }
 

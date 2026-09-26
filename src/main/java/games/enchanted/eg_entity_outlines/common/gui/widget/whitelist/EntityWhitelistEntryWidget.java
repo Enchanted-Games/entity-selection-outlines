@@ -16,7 +16,21 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.CommonColors;
 
 public class EntityWhitelistEntryWidget extends Button {
-    private static final WidgetSprites SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("widget/button"), Identifier.withDefaultNamespace("widget/button_disabled"), Identifier.withDefaultNamespace("widget/button_highlighted"));
+    private static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(
+        Identifier.withDefaultNamespace("widget/button"),
+        Identifier.withDefaultNamespace("widget/button_disabled"),
+        Identifier.withDefaultNamespace("widget/button_highlighted")
+    );
+    private static final WidgetSprites CHECKBOX_SPRITES = new WidgetSprites(
+        Identifier.withDefaultNamespace("widget/checkbox"),
+        Identifier.withDefaultNamespace("widget/checkbox"),
+        Identifier.withDefaultNamespace("widget/checkbox_highlighted")
+    );
+    private static final WidgetSprites CHECKBOX_SELECTED_SPRITES = new WidgetSprites(
+        Identifier.withDefaultNamespace("widget/checkbox_selected"),
+        Identifier.withDefaultNamespace("widget/checkbox_selected"),
+        Identifier.withDefaultNamespace("widget/checkbox_selected_highlighted")
+    );
 
     protected final EntityWhitelistScreen.EntityTypeNameAndId type;
 
@@ -58,7 +72,7 @@ public class EntityWhitelistEntryWidget extends Button {
 
         graphics.blitSprite(
             RenderPipelines.GUI_TEXTURED,
-            SPRITES.get(this.active, this.isHoveredOrFocused()),
+            BUTTON_SPRITES.get(this.active, this.isHoveredOrFocused()),
             this.getX(),
             this.getY(),
             this.getWidth() - rightPadding,
@@ -67,7 +81,7 @@ public class EntityWhitelistEntryWidget extends Button {
         );
 
         int left = this.getX() + margin;
-        int right = this.getX() + this.getWidth() - margin - rightPadding;
+        int right = this.getX() + this.getWidth() - margin - rightPadding + 1;
         int top = this.getY();
         int bottom = this.getY() + this.getHeight();
         textCollector.acceptScrollingWithDefaultCenter(
@@ -78,24 +92,15 @@ public class EntityWhitelistEntryWidget extends Button {
             bottom
         );
 
-        if(this.entryInWhitelist) {
-            textCollector.acceptScrollingWithDefaultCenter(
-                Component.literal("IN"),
-                left,
-                left + 30,
-                top,
-                bottom
-            );
-        }
-        if(this.initialEntryInWhitelist) {
-            textCollector.acceptScrollingWithDefaultCenter(
-                Component.literal("oIN"),
-                left + 30,
-                left + 50,
-                top,
-                bottom
-            );
-        }
+        graphics.blitSprite(
+            RenderPipelines.GUI_TEXTURED,
+            (this.entryInWhitelist ? CHECKBOX_SELECTED_SPRITES : CHECKBOX_SPRITES).get(this.active, this.isHoveredOrFocused()),
+            right,
+            this.getY(),
+            rightPadding,
+            this.getHeight(),
+            ARGB.white(this.alpha)
+        );
     }
 
     public void resetPendingChanges() {

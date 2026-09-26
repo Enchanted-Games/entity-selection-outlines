@@ -87,7 +87,7 @@ public class EntityWhitelistScreen extends ConfigScreen {
                     this.whitelistEntryProxy.isEntryEnabled(type.id()),
                     type,
                     this.whitelistEntryProxy
-                ))
+                ), 22)
             );
         }
 
