@@ -21,6 +21,7 @@ import org.jspecify.annotations.Nullable;
 public class EntityOutlineExtractor {
     public static boolean shouldEntityHaveOutline(Entity entity) {
         if(!ConfigOptions.MOD_ENABLED_OPTION.getValue()) return false;
+        if(ConfigOptions.OUTLINE_EVERYTHING.getValue()) return true;
 
         boolean outlineEntity = ConfigOptions.ENTITY_WHITELIST.getValue().containsEntity(entity.getType());
 
