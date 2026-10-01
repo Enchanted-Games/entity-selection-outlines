@@ -1,9 +1,9 @@
 [mod]
 id = "eg_entity_outlines"
 name = "Entity Selection Outlines"
-description = "Adds an outline when targeting certain entities including item frames, cushions, paintings, leash knots, armour stands, and end crystals"
+description = "Adds an outline when targeting certain entities including item frames, cushions, paintings, leash knots, armour stands, and end crystals. Fully client-side and configurable!"
 group = "games.enchanted"
-version = "1.0.0"
+version = "1.1.0"
 license = "CC BY-NC 4.0"
 source_url = "https://github.com/Enchanted-Games/entity-selection-outlines"
 issue_tracker = "https://github.com/Enchanted-Games/entity-selection-outlines/issues"
@@ -13,8 +13,8 @@ icon = "assets/eg_entity_outlines/icon.png"
 # fabric versions: https://fabricmc.net/develop/
 
 [fabric]
-deps.fabric-loader = "0.19.3"
-dep_str.fabric-loader = ">=0.19"
+deps.fabric-loader = "0.19.5"
+dep_str.fabric-loader = ">=0.19.5"
 
 
 ["26.1"]
