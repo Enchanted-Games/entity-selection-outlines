@@ -157,6 +157,7 @@ publishMods {
             accessToken = env.MODRINTH_API_KEY.orNull()
             minecraftVersions.add(sc.properties.get<String>("deps.minecraft"))
             minecraftVersions.addAll(additionalVersions)
+            environment = CLIENT_ONLY
         }
     }
 
@@ -166,6 +167,8 @@ publishMods {
             accessToken = env.CURSEFORGE_API_KEY.orNull()
             minecraftVersions.add(stonecutter.current.version)
             minecraftVersions.addAll(additionalVersions)
+            client = true
+            server = false
         }
     }
 }

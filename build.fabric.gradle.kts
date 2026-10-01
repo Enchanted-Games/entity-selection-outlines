@@ -146,7 +146,9 @@ publishMods {
             accessToken = env.MODRINTH_API_KEY.orNull()
             minecraftVersions.add(sc.properties.get<String>("deps.minecraft"))
             minecraftVersions.addAll(additionalVersions)
+            requires("fabric-api")
             optional("modmenu")
+            environment = CLIENT_ONLY
         }
     }
 
@@ -156,6 +158,10 @@ publishMods {
             accessToken = env.CURSEFORGE_API_KEY.orNull()
             minecraftVersions.add(stonecutter.current.version)
             minecraftVersions.addAll(additionalVersions)
+            requires("fabric-api")
+            optional("modmenu")
+            client = true
+            server = false
         }
     }
 }
