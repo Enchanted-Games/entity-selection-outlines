@@ -119,11 +119,9 @@ public class ConfigScreen extends Screen implements WhitelistEntryProxy {
         optionsList.addBigOption(
             new OnOffWidget(0, 0, ConfigOptions.ALWAYS_USE_HIGH_CONTRAST)
         );
-        optionsList.addBigOption(
-            new OnOffWidget(0, 0, ConfigOptions.OUTLINE_EVERYTHING)
-        );
 
         optionsList.addSpacer(10);
+
         optionsList.addCategoryHeader(
             ComponentUtil.WHITELIST_CATEGORY.copy()
                 .withStyle(style -> style.withBold(true).withUnderlined(true))
@@ -136,6 +134,9 @@ public class ConfigScreen extends Screen implements WhitelistEntryProxy {
         );
         optionsList.addOption(
             new OnOffWidget(0, 0, ConfigOptions.INVERT_WHITELIST)
+        );
+        optionsList.addBigOption(
+            new OnOffWidget(0, 0, ConfigOptions.OUTLINE_EVERYTHING)
         );
     }
 

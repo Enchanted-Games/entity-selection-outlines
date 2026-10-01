@@ -43,7 +43,8 @@ public class LevelExtractorMixin {
         if(!(this.minecraft.hitResult instanceof EntityHitResult entityHitResult)) return;
 
         Entity entity = entityHitResult.getEntity();
-        if(!EntityOutlineExtractor.shouldEntityHaveOutline(entity)) return;
+        boolean shouldOutline = EntityOutlineExtractor.shouldEntityHaveOutline(entity);
+        if(!shouldOutline) return;
 
         levelRenderState.blockOutlineRenderState = EntityOutlineExtractor.extractRenderState(camera, levelRenderState, this.minecraft, entity);
     }
