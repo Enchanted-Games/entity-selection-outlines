@@ -58,7 +58,10 @@ public class ConfigOptions {
             EntityTypeIds.ARMOR_STAND,
             EntityTypeIds.END_CRYSTAL,
             EntityTypeIds.FALLING_BLOCK,
-            EntityTypeIds.INTERACTION
+            EntityTypeIds.INTERACTION,
+            EntityTypeIds.BREEZE_WIND_CHARGE,
+            EntityTypeIds.WIND_CHARGE,
+            EntityTypeIds.FIREBALL
             //?} else {
             /*EntityType.ITEM_FRAME,
             EntityType.GLOW_ITEM_FRAME,
@@ -67,7 +70,10 @@ public class ConfigOptions {
             EntityType.ARMOR_STAND,
             EntityType.END_CRYSTAL,
             EntityType.FALLING_BLOCK,
-            EntityType.INTERACTION
+            EntityType.INTERACTION,
+            EntityType.BREEZE_WIND_CHARGE,
+            EntityType.WIND_CHARGE,
+            EntityType.FIREBALL
             *///? }
         )),
         "entity_whitelist"
