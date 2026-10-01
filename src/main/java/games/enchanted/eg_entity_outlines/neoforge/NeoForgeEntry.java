@@ -4,10 +4,6 @@
 import games.enchanted.eg_entity_outlines.common.ModConstants;
 import games.enchanted.eg_entity_outlines.common.ModEntry;
 import games.enchanted.eg_entity_outlines.common.gui.screen.ConfigScreen;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.ConfirmScreen;
-import net.minecraft.network.chat.Component;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -21,7 +17,7 @@ public class NeoForgeEntry {
         ModEntry.init();
 
         ModLoadingContext.get().registerExtensionPoint(
-            IConfigScreenFactory.class, () -> (client, parent) -> ConfigScreen.createConfigScreen(parent)
+            IConfigScreenFactory.class, () -> (client, parent) -> ConfigScreen.create(parent)
         );
     }
 }

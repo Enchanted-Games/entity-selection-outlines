@@ -4,6 +4,10 @@ import com.mojang.blaze3d.platform.InputConstants;
 import games.enchanted.eg_entity_outlines.common.PlatformHelper;
 import net.minecraft.client.input.KeyEvent;
 
+//? if minecraft: <= 26.2 {
+/*import net.minecraft.client.Minecraft;
+*///? }
+
 public class InputUtil {
     public static InputConstants.Key getKey(int key) {
         return getKey(key, 0);

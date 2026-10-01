@@ -8,7 +8,12 @@ import games.enchanted.eg_entity_outlines.common.PlatformHelper;
 import games.enchanted.eg_entity_outlines.common.config.option.BoolOption;
 import games.enchanted.eg_entity_outlines.common.config.option.ConfigOption;
 import games.enchanted.eg_entity_outlines.common.config.option.EntityWhitelistOption;
+
+//? if minecraft: >= 26.2 {
 import net.minecraft.world.entity.EntityTypeIds;
+//? } else {
+/*import net.minecraft.world.entity.EntityType;
+*///? }
 
 import java.io.*;
 import java.util.ArrayList;
@@ -44,6 +49,7 @@ public class ConfigOptions {
 
     public static final ConfigOption<EntityWhitelist> ENTITY_WHITELIST = registerOption(new EntityWhitelistOption(
         EntityWhitelist.create(List.of(
+            //? if minecraft: >= 26.2 {
             EntityTypeIds.CUSHION,
             EntityTypeIds.ITEM_FRAME,
             EntityTypeIds.GLOW_ITEM_FRAME,
@@ -51,7 +57,18 @@ public class ConfigOptions {
             EntityTypeIds.PAINTING,
             EntityTypeIds.ARMOR_STAND,
             EntityTypeIds.END_CRYSTAL,
-            EntityTypeIds.FALLING_BLOCK
+            EntityTypeIds.FALLING_BLOCK,
+            EntityTypeIds.INTERACTION
+            //?} else {
+            /*EntityType.ITEM_FRAME,
+            EntityType.GLOW_ITEM_FRAME,
+            EntityType.LEASH_KNOT,
+            EntityType.PAINTING,
+            EntityType.ARMOR_STAND,
+            EntityType.END_CRYSTAL,
+            EntityType.FALLING_BLOCK,
+            EntityType.INTERACTION
+            *///? }
         )),
         "entity_whitelist"
     ));

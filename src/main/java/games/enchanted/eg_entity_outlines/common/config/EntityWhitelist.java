@@ -48,9 +48,21 @@ public record EntityWhitelist(List<Identifier> whitelistedTypes, List<Identifier
         return BuiltInRegistries.ENTITY_TYPE.containsKey(id);
     }
 
-    public static EntityWhitelist create(List<ResourceKey<EntityType<?>>> whitelistedTypes) {
+    public static EntityWhitelist create(
+        //? if minecraft: >= 26.3 {
+        List<ResourceKey<EntityType<?>>> whitelistedTypes
+        //? } else {
+        /*List<EntityType<?>> whitelistedTypes
+        *///? }
+    ) {
         return new EntityWhitelist(
-            whitelistedTypes.stream().map(ResourceKey::identifier).toList(),
+            whitelistedTypes.stream()
+                //? if minecraft: >= 26.3 {
+                .map(ResourceKey::identifier)
+                //? } else {
+                /*.map(BuiltInRegistries.ENTITY_TYPE::getKey)
+                *///? }
+                .toList(),
             List.of()
         );
     }
