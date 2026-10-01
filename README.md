@@ -1,6 +1,6 @@
 # Entity Selection Outlines
 
-Adds an outline when targeting certain entities including item frames, cushions, paintings, leash knots, armour stands, and end crystals.
+Adds an outline when targeting certain entities including item frames, cushions, paintings, leash knots, armour stands, and end crystals. Fully client-side and configurable!
 
 ## Planned features
 
